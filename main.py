@@ -8,8 +8,11 @@ class PointCounter(ft.UserControl):
         self.points_labels = ft.Text(expand=True)
         self.total_labels = ft.Text(width=110)
         self.points:list[int|float] = [0]
-        self.buttons = [
+        self.add_buttons = [
             ft.OutlinedButton(str(x), on_click=self.adder(x), width=150, height=70) for x in [0.25, 0.5, 0.75, 1, 2, 3, 4, 5, 10]
+        ]
+        self.rem_buttons = [
+            ft.OutlinedButton(str(x), on_click=self.adder(x), width=150, height=70) for x in [-0.25, -0.5, -0.75, -1, -2, -3, -4, -5, -10]
         ]
 
         self.logs_txt = ""
@@ -24,7 +27,8 @@ class PointCounter(ft.UserControl):
                 ft.Row([ft.Text("Compteur de points")]),
                 ft.Row([self.points_labels, self.total_labels]),
                 ft.Row([self.cur_exo_disp]),
-                ft.ResponsiveRow([ft.Column(col={"xs": 4, "sm": 3, "md": 2, "xl": 1}, controls=[c]) for c in self.buttons]),
+                ft.ResponsiveRow([ft.Column(col={"xs": 4, "sm": 3, "md": 2, "xl": 1}, controls=[c]) for c in self.add_buttons]),
+                ft.ResponsiveRow([ft.Column(col={"xs": 4, "sm": 3, "md": 2, "xl": 1}, controls=[c]) for c in self.rem_buttons]),
                 ft.Row([
                     ft.FilledButton("Exo", expand=True, height=70, on_click=self.exo),
                     ft.FilledButton("Next", expand=True, height=70, on_click=self.suivant),
@@ -58,6 +62,7 @@ class PointCounter(ft.UserControl):
         
         return add
     
+    
     def set_note(self, e):
         if self.cur_exo_disp.value:
             a = float(self.cur_exo_disp.value)
@@ -84,5 +89,4 @@ def main(page: ft.Page):
     return
 
 ft.app(target=main)
-
 
